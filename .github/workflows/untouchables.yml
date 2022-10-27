@@ -7,17 +7,12 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
-
-      - name: Get changed files
-        id: get-changed-files
-        run: |
-          git diff ${{ github.event.pull_request.base.sha }} --name-only
-      
+        # with:
+        #   fetch-depth: 2
+     
       - name: Check untouchable files
         run: |
-          for changed_file in ${{ steps.get-changed-files.outputs.all }}; do
+          for changed_file in $(git diff ${{ github.event.pull_request.base.sha }} --name-only); do
             echo ${changed_file};
             if grep -q ^untouchables/ <<< ${changed_file}
             then
