@@ -13,7 +13,7 @@ jobs:
       - name: Get changed files
         id: get-changed-files
         run: |
-          git diff origin/master --name-only
+          git diff ${{ github.event.pull_request.head.sha }} --name-only
       
       - name: Check untouchable files
         run: |
