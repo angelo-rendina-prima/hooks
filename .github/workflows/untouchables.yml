@@ -11,9 +11,8 @@ jobs:
 
       - id: get-changed-files
         run: |
-          echo "::set-output $(
-            git diff ${{ github.event.pull_request.head.sha }} --name-only
-          )"
+          git diff ${{ github.event.pull_request.head.sha }} --name-only
+          echo "::set-output KEKW"
       
       - run: |
           for changed_file in ${{ steps.get-changed-files.outputs.all }}; do
