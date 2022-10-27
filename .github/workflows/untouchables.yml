@@ -13,7 +13,7 @@ jobs:
       - name: Get changed files
         id: get-changed-files
         run: |
-          git diff master --name-only
+          git diff origin/master --name-only
       
       - name: Check untouchable files
         run: |
