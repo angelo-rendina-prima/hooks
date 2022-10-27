@@ -15,7 +15,7 @@ jobs:
           echo "::set-output KEKW"
       
       - run: |
-          for changed_file in $(echo "lmao"); do
+          for changed_file in $(git diff ${{ github.event.pull_request.head.sha }} --name-only); do
             echo ${changed_file};
             if grep -q ^untouchables/ <<< ${changed_file}
             then
