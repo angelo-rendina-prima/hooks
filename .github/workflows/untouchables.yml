@@ -5,14 +5,18 @@ jobs:
   check-untouchables:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        # with:
-        #   fetch-depth: 2
-     
-      - name: Check untouchable files
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - id: get-changed-files
         run: |
-          for changed_file in $(git diff ${{ github.event.pull_request.base.sha }} --name-only); do
+          echo "::set-output $(
+            git diff ${{ github.event.pull_request.head.sha }} --name-only
+          )"
+      
+      - run: |
+          for changed_file in ${{ steps.get-changed-files.outputs.all }}; do
             echo ${changed_file};
             if grep -q ^untouchables/ <<< ${changed_file}
             then
