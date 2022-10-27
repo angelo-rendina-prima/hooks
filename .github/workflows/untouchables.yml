@@ -11,8 +11,9 @@ jobs:
       - id: fail-if-untouchables-changed
         run: |
           for changed_file in ${{ steps.get-changed-files.outputs.all }}; do
-            if grep -q ^untouchables/ <<< ${changed_file} then
-              echo "Something happened in untouchables/"
-              exit 1
+            if grep -q ^untouchables/ <<< ${changed_file}
+            then
+              echo "Something happened in untouchables/";
+              exit 1;
             fi
           done
