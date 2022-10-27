@@ -11,7 +11,6 @@ jobs:
       - name: Get changed files
         id: get-changed-files
         run: |
-#           git diff ${{ github.event.pull_request.base.sha }} --name-only
           git diff master --name-only
       
       - name: Check untouchable files
@@ -21,6 +20,5 @@ jobs:
             if grep -q ^untouchables/ <<< ${changed_file}
             then
               echo "Something happened in untouchables/";
-              # exit 1;
             fi
           done
