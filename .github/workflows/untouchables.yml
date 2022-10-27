@@ -1,0 +1,19 @@
+name: Untouchables
+run-name: Check untouchables folder
+on: [pull_request]
+jobs:
+  check-untouchables:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      
+      - run: |
+          for changed_file in $(git diff ${{ github.event.pull_request.base.sha }} --name-only); do
+            if grep -q ^untouchables/ <<< ${changed_file}
+            then
+              echo "Something happened in untouchables/";
+              exit 1;
+            fi
+          done
